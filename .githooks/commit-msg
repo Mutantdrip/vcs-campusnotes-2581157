@@ -1,0 +1,13 @@
+#!/bin/sh
+# commit-msg: require at least 10 characters and a Conventional Commit type prefix.
+msg=$(head -n 1 "$1" | tr -d '\r')
+len=${#msg}
+if [ "$len" -lt 10 ]; then
+  echo "commit-msg: message too short ($len chars, minimum is 10)." >&2
+  exit 1
+fi
+case "$msg" in
+  feat:*|fix:*|docs:*|refactor:*|chore:*) exit 0 ;;
+esac
+echo "commit-msg: message must start with feat:, fix:, docs:, refactor: or chore:" >&2
+exit 1

@@ -1,0 +1,17 @@
+#!/bin/sh
+# pre-commit: reject the commit if any staged file contains a to-do / fix-me marker.
+# The regex is written as TO[D]O / FIX[M]E so this hook never flags itself.
+pattern='TO[D]O|FIX[M]E'
+status=0
+for f in $(git diff --cached --name-only --diff-filter=ACM); do
+  hits=$(git show ":$f" | grep -nE "$pattern")
+  if [ -n "$hits" ]; then
+    echo "pre-commit: marker found in staged file '$f':" >&2
+    echo "$hits" | sed 's/^/    line /' >&2
+    status=1
+  fi
+done
+if [ $status -ne 0 ]; then
+  echo "pre-commit: commit rejected - remove the markers and commit again." >&2
+fi
+exit $status
