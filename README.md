@@ -8,4 +8,4 @@ Author: Sathvika Singoti (URN 2581157, Section 3F)
 
 - [Remote repositories](notes/remotes.md)
 - [Branching basics](notes/branching.md)
-- [Git command cheat sheet](notes/cheat-sheet.md)
+- [Git command cheat sheet](notes/cheatsheet.md)
